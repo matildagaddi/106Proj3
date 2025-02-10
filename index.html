@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dengue Cases in Colombia</title>
-    <script type="module" src="viz.js"></script> <!-- Load your D3 script -->
+    <script type="module" src="script.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,6 +16,17 @@
             align-items: center;
             margin-top: 20px;
         }
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+            display: none;
+            pointer-events: none;
+            font-size: 14px;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -24,6 +35,9 @@
     <div class="chart-container">
         <svg id="chart"></svg>
     </div>
+
+    <!-- Tooltip for displaying additional information -->
+    <div id="tooltip" class="tooltip"></div>
 
 </body>
 </html>

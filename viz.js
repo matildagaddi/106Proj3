@@ -2,16 +2,15 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Sample data structure
 const data = [
-  { Municipality: "City A", CasesPer1000: 5.2, DistanceToHospital: 2.5 },
-  { Municipality: "City B", CasesPer1000: 4.8, DistanceToHospital: 5.1 },
-  { Municipality: "City C", CasesPer1000: 4.3, DistanceToHospital: 1.7 },
-  { Municipality: "City D", CasesPer1000: 3.9, DistanceToHospital: 3.2 },
-  { Municipality: "City E", CasesPer1000: 3.5, DistanceToHospital: 4.9 },
-  { Municipality: "City F", CasesPer1000: 3.2, DistanceToHospital: 2.1 },
-  { Municipality: "City G", CasesPer1000: 2.9, DistanceToHospital: 6.0 },
-  { Municipality: "City H", CasesPer1000: 2.5, DistanceToHospital: 1.9 },
-  { Municipality: "City I", CasesPer1000: 2.1, DistanceToHospital: 4.5 },
-  { Municipality: "City J", CasesPer1000: 1.8, DistanceToHospital: 3.8 }
+  { Municipality: "Saldaña", CasesPer1000: 47.6, DistanceToHospital: 7.3, Population: 14450},
+  { Municipality: "Capitanejo", CasesPer1000: 45.6, DistanceToHospital: 4.5, Population: 5479 },
+  { Municipality: "San Martín", CasesPer1000: 35.9, DistanceToHospital: 27.3, Population: 26571 },
+  { Municipality: "Leticia", CasesPer1000: 34.3, DistanceToHospital: 10.6, Population: 48918 },
+  { Municipality: "Medina", CasesPer1000: 32.2, DistanceToHospital: 21.9, Population: 8064 },
+  { Municipality: "Cubarral", CasesPer1000: 31.8, DistanceToHospital: 18.1, Population: 7019 },
+  { Municipality: "Alvarado", CasesPer1000: 28.9, DistanceToHospital: 8.82, Population: 8710 },
+  { Municipality: "San Luis de Gaceno", CasesPer1000: 27.8, DistanceToHospital: 10.7, Population: 5476 },
+  { Municipality: "Baraya", CasesPer1000: 27.2, DistanceToHospital: 13.7, Population: 8282 },
 ];
 
 // Set up dimensions
@@ -39,6 +38,44 @@ const yScale = d3.scaleBand()
 
 const colorScale = d3.scaleSequential(d3.interpolateReds)
   .domain([d3.min(data, d => d.DistanceToHospital), d3.max(data, d => d.DistanceToHospital)]);
+
+  
+// Tooltip container
+const tooltip = d3.select("#tooltip");
+
+// Draw bars
+svg.selectAll(".bar")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("class", "bar")
+  .attr("y", d => yScale(d.Municipality))
+  .attr("height", yScale.bandwidth())
+  .attr("x", 0)
+  .attr("width", d => xScale(d.CasesPer1000))
+  .attr("fill", d => colorScale(d.DistanceToHospital))
+  .on("mouseover", function(event, d) {
+    // Show the tooltip with population and distance
+    tooltip.style("display", "block")
+      .html(`
+        <strong>Municipality:</strong> ${d.Municipality} <br>
+        <strong>Population:</strong> ${d.Population.toLocaleString()} <br>
+        <strong>Distance to Nearest Hospital:</strong> ${d.DistanceToHospital} km
+      `)
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 40) + "px");
+  })
+  .on("mousemove", function(event) {
+    // Update the position of the tooltip as the mouse moves
+    tooltip.style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY - 40) + "px");
+  })
+  .on("mouseout", function() {
+    // Hide the tooltip when the mouse leaves the bar
+    tooltip.style("display", "none");
+  });
+
+
 
 // Draw bars
 svg.selectAll(".bar")
@@ -78,7 +115,7 @@ svg.append("g")
   .style("font-weight", "bold");
 
 // Add vertical average line
-const avgCases = d3.mean(data, d => d.CasesPer1000);
+const avgCases = 3//d3.mean(data, d => d.CasesPer1000);
 svg.append("line")
   .attr("x1", xScale(avgCases))
   .attr("x2", xScale(avgCases))
