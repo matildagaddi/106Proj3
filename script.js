@@ -133,20 +133,20 @@ svg.append("text")
   .text("City Average: " + avgCases.toFixed(1));
 
 // Add title and subtitle
-svg.append("text")
-  .attr("x", width / 2)
-  .attr("y", -120)
-  .attr("text-anchor", "middle")
-  .style("font-size", "18px")
-  .style("font-weight", "bold")
-  .text("Top Dengue Spreading Cities in Colombia");
+// svg.append("text")
+//   .attr("x", width / 2)
+//   .attr("y", -120)
+//   .attr("text-anchor", "middle")
+//   .style("font-size", "18px")
+//   .style("font-weight", "bold")
+//   .text("Top Dengue Spreading Cities in Colombia");
 
 svg.append("text")
   .attr("x", width / 2)
   .attr("y", -90)
   .attr("text-anchor", "middle")
   .style("font-size", "12px")
-  .html("Dengue is a mosquito-borne viral infection that can cause severe illness.<br>Travelers should be cautious, especially in these cities with high spread-rate.")
+  .html("Dengue is a mosquito-borne viral infection that can cause severe illness.")
   .style("fill", "#666");
 
 // Add data source annotation
